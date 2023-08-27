@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/users/entities/user.entity";
+import { SnakeNamingStrategy } from "./naming-strategy";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { User } from "src/users/entities/user.entity";
         entities: [User],
         synchronize: true,
         autoLoadEntities: true,
+        namingStrategy: new SnakeNamingStrategy(),
       }),
       inject: [ConfigService],
     }),
