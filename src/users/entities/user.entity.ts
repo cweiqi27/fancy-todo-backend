@@ -6,16 +6,16 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { USER_ROLE, UserRole } from "../types/user.types";
-import { Todo } from "src/todos/entities/todo.entity";
+} from 'typeorm';
+import { USER_ROLE, UserRole } from '../types/user.types';
+import { Todo } from 'src/todos/entities/todo.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -31,11 +31,17 @@ export class User {
   isActive: boolean;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: USER_ROLE,
     default: USER_ROLE.USER,
   })
   role: UserRole;
+
+  @Column({ nullable: true })
+  dob?: Date;
+
+  @Column({ nullable: true })
+  age?: number;
 
   @OneToMany(() => Todo, (todo) => todo.user)
   todos: Todo[];

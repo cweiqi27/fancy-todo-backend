@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
-import type { CreateUserDto } from "./dto/create-user.dto";
-import type { UpdateUserDto } from "./dto/update-user.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
+import { Injectable } from '@nestjs/common';
+import type { CreateUserDto } from './dto/create-user.dto';
+import type { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { differenceInCalendarYears } from 'date-fns';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,10 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    const user = this.usersRepostiory.create(createUserDto);
+    const age = createUserDto.dob
+      ? this.calculateAge(createUserDto.dob)
+      : undefined;
+    const user = this.usersRepostiory.create({ ...createUserDto, age: age });
     return this.usersRepostiory.save(user);
   }
 
@@ -31,5 +35,9 @@ export class UsersService {
 
   async remove(id: string) {
     return await this.usersRepostiory.delete(id);
+  }
+
+  private calculateAge(dob: Date) {
+    return differenceInCalendarYears(new Date(), dob);
   }
 }

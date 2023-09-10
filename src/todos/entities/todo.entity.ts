@@ -1,9 +1,9 @@
-import { User } from "src/users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Todo {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -11,6 +11,9 @@ export class Todo {
 
   @Column({ nullable: true })
   description?: string;
+
+  @Column({ nullable: true })
+  deadline: Date;
 
   @ManyToOne(() => User, (user) => user.todos, {
     cascade: true,

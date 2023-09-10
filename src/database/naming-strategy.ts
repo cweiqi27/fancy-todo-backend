@@ -1,8 +1,8 @@
 // Credits to @recurrence
 // https://gist.github.com/recurrence/b6a4cb04a8ddf42eda4e4be520921bd2
 
-import { DefaultNamingStrategy, type NamingStrategyInterface } from "typeorm";
-import { snakeCase } from "typeorm/util/StringUtils";
+import { DefaultNamingStrategy, type NamingStrategyInterface } from 'typeorm';
+import { snakeCase } from 'typeorm/util/StringUtils';
 
 export class SnakeNamingStrategy
   extends DefaultNamingStrategy
@@ -18,7 +18,7 @@ export class SnakeNamingStrategy
     embeddedPrefixes: string[],
   ): string {
     return (
-      snakeCase(embeddedPrefixes.join("_")) +
+      snakeCase(embeddedPrefixes.join('_')) +
       (customName ? customName : snakeCase(propertyName))
     );
   }
@@ -28,7 +28,7 @@ export class SnakeNamingStrategy
   }
 
   joinColumnName(relationName: string, referencedColumnName: string): string {
-    return snakeCase(relationName + "_" + referencedColumnName);
+    return snakeCase(relationName + '_' + referencedColumnName);
   }
 
   joinTableName(
@@ -38,9 +38,9 @@ export class SnakeNamingStrategy
   ): string {
     return snakeCase(
       firstTableName +
-        "_" +
-        firstPropertyName.replace(/\./gi, "_") +
-        "_" +
+        '_' +
+        firstPropertyName.replace(/\./gi, '_') +
+        '_' +
         secondTableName,
     );
   }
@@ -51,7 +51,7 @@ export class SnakeNamingStrategy
     columnName?: string,
   ): string {
     return snakeCase(
-      tableName + "_" + (columnName ? columnName : propertyName),
+      tableName + '_' + (columnName ? columnName : propertyName),
     );
   }
 
@@ -59,6 +59,6 @@ export class SnakeNamingStrategy
     parentTableName: any,
     parentTableIdPropertyName: any,
   ): string {
-    return snakeCase(parentTableName + "_" + parentTableIdPropertyName);
+    return snakeCase(parentTableName + '_' + parentTableIdPropertyName);
   }
 }
